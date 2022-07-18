@@ -1,36 +1,31 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using LT.DigitalOffice.TextTemplateService.Broker.Helpers.ParseEntity;
-using LT.DigitalOffice.TextTemplateService.Business.Commands.ParseEntity.Interfaces;
 using LT.DigitalOffice.Kernel.BrokerSupport.AccessValidatorEngine.Interfaces;
 using LT.DigitalOffice.Kernel.Constants;
-using LT.DigitalOffice.Kernel.Enums;
 using LT.DigitalOffice.Kernel.Helpers.Interfaces;
 using LT.DigitalOffice.Kernel.Responses;
-using Microsoft.AspNetCore.Http;
+using LT.DigitalOffice.TextTemplateService.Broker.Helpers.ParseEntity;
+using LT.DigitalOffice.TextTemplateService.Business.Commands.ParseEntity.Interfaces;
 
 namespace LT.DigitalOffice.TextTemplateService.Business.Commands.ParseEntity
 {
   public class FindParseEntitiesCommand : IFindParseEntitiesCommand
   {
     private readonly IAccessValidator _accessValidator;
-    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IResponseCreator _responseCreator;
 
     public FindParseEntitiesCommand(
       IAccessValidator accessValidator,
-      IHttpContextAccessor httpContextAccessor,
       IResponseCreator responseCreator)
     {
       _accessValidator = accessValidator;
-      _httpContextAccessor = httpContextAccessor;
       _responseCreator = responseCreator;
     }
 
     public async Task<OperationResultResponse<Dictionary<string, Dictionary<string, List<string>>>>> ExecuteAsync()
     {
-      if (!await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates))
+      if (!await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailsTemplates))
       {
         return _responseCreator
           .CreateFailureResponse<Dictionary<string, Dictionary<string, List<string>>>>(
@@ -51,7 +46,6 @@ namespace LT.DigitalOffice.TextTemplateService.Business.Commands.ParseEntity
 
       return new()
       {
-        Status = OperationResultStatusType.FullSuccess,
         Body = response
       };
     }

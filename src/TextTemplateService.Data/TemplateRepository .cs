@@ -62,16 +62,16 @@ namespace LT.DigitalOffice.TextTemplateService.Data
       return true;
     }
 
-    public async Task<DbTemplate> GetAsync(Guid emailTemplateId)
+    public Task<DbTemplate> GetAsync(Guid emailTemplateId)
     {
-      return await _provider.Templates
+      return _provider.Templates
         .Include(et => et.TextsTemplates)
         .FirstOrDefaultAsync(et => et.Id == emailTemplateId);
     }
 
-    public async Task<DbTemplate> GetAsync(int type)
+    public Task<DbTemplate> GetAsync(int type)
     {
-      return await _provider.Templates
+      return _provider.Templates
         .Include(et => et.TextsTemplates)
         .FirstOrDefaultAsync(et => et.Type == type && et.IsActive);
     }

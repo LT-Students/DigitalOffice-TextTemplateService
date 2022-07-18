@@ -31,16 +31,16 @@ namespace LT.DigitalOffice.TextTemplateService.Data
       return true;
     }
 
-    public async Task<List<DbKeyword>> GetAsync(Guid endpointId)
+    public Task<List<DbKeyword>> GetAsync(Guid endpointId)
     {
-      return await _provider.Keywords
+      return _provider.Keywords
         .Where(k => k.EndpointId == endpointId)
         .ToListAsync();
     }
 
-    public async Task<List<DbKeyword>> GetAsync(List<Guid> endpointsIds)
+    public Task<List<DbKeyword>> GetAsync(List<Guid> endpointsIds)
     {
-      return await _provider.Keywords
+      return _provider.Keywords
         .Where(k => endpointsIds.Contains(k.EndpointId))
         .ToListAsync();
     }

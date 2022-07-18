@@ -3,7 +3,6 @@ using System.Net;
 using System.Threading.Tasks;
 using LT.DigitalOffice.Kernel.BrokerSupport.AccessValidatorEngine.Interfaces;
 using LT.DigitalOffice.Kernel.Constants;
-using LT.DigitalOffice.Kernel.Enums;
 using LT.DigitalOffice.Kernel.Helpers.Interfaces;
 using LT.DigitalOffice.Kernel.Responses;
 using LT.DigitalOffice.TextTemplateService.Business.Commands.ParseEntity.Interfaces;
@@ -34,14 +33,13 @@ namespace LT.DigitalOffice.TextTemplateService.Business.Commands.ParseEntity
 
     public async Task<OperationResultResponse<EndpointKeywordsInfo>> ExecuteAsync(Guid endpointId)
     {
-      if (!await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates))
+      if (!await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailsTemplates))
       {
         return _responseCreator.CreateFailureResponse<EndpointKeywordsInfo>(HttpStatusCode.Forbidden);
       }
 
       return new()
       {
-        Status = OperationResultStatusType.FullSuccess,
         Body = _mapper.Map(await _repository.GetAsync(endpointId))
       };
     }

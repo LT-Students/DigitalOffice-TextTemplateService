@@ -4,7 +4,6 @@ using System.Net;
 using System.Threading.Tasks;
 using LT.DigitalOffice.Kernel.BrokerSupport.AccessValidatorEngine.Interfaces;
 using LT.DigitalOffice.Kernel.Constants;
-using LT.DigitalOffice.Kernel.Enums;
 using LT.DigitalOffice.Kernel.FluentValidationExtensions;
 using LT.DigitalOffice.Kernel.Helpers.Interfaces;
 using LT.DigitalOffice.Kernel.Responses;
@@ -43,7 +42,7 @@ namespace LT.DigitalOffice.TextTemplateService.Business.Commands.Template
       Guid emailTemplateId,
       JsonPatchDocument<EditTemplateRequest> patch)
     {
-      if (!await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates))
+      if (!await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailsTemplates))
       {
         return _responseCreator.CreateFailureResponse<bool>(HttpStatusCode.Forbidden);
       }
@@ -56,8 +55,6 @@ namespace LT.DigitalOffice.TextTemplateService.Business.Commands.Template
       OperationResultResponse<bool> response = new();
 
       response.Body = await _repository.EditAsync(emailTemplateId, _mapper.Map(patch));
-
-      response.Status = OperationResultStatusType.FullSuccess;
 
       if (!response.Body)
       {

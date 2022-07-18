@@ -2,17 +2,16 @@
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using LT.DigitalOffice.Kernel.FluentValidationExtensions;
+using LT.DigitalOffice.Kernel.Helpers.Interfaces;
+using LT.DigitalOffice.Kernel.Responses;
+using LT.DigitalOffice.Kernel.Validators.Interfaces;
 using LT.DigitalOffice.TextTemplateService.Business.Commands.Template.Interfaces;
 using LT.DigitalOffice.TextTemplateService.Data.Interfaces;
 using LT.DigitalOffice.TextTemplateService.Mappers.Models.Interfaces;
 using LT.DigitalOffice.TextTemplateService.Models.Db;
 using LT.DigitalOffice.TextTemplateService.Models.Dto.Models;
 using LT.DigitalOffice.TextTemplateService.Models.Dto.Requests.Template;
-using LT.DigitalOffice.Kernel.Enums;
-using LT.DigitalOffice.Kernel.FluentValidationExtensions;
-using LT.DigitalOffice.Kernel.Helpers.Interfaces;
-using LT.DigitalOffice.Kernel.Responses;
-using LT.DigitalOffice.Kernel.Validators.Interfaces;
 
 namespace LT.DigitalOffice.TextTemplateService.Business.Commands.Template
 {
@@ -51,7 +50,6 @@ namespace LT.DigitalOffice.TextTemplateService.Business.Commands.Template
       {
         Body = repositoryResponse.dbTempates?.Select(_mapper.Map).ToList(),
         TotalCount = repositoryResponse.totalCount,
-        Status = OperationResultStatusType.FullSuccess
       };
     }
   }

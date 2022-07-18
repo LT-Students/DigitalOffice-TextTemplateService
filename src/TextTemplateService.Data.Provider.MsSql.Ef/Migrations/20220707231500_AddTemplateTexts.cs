@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LT.DigitalOffice.TextTemplateService.Data.Provider.MsSql.Ef.Migrations
 {
-  [Migration("20220303141200_AddTemplateTexts")]
+  [Migration("20220707231500_AddTemplateTexts")]
   [DbContext(typeof(TextTemplateServiceDbContext))]
   public class AddTemplateTexts : Migration
   {
@@ -16,6 +16,7 @@ namespace LT.DigitalOffice.TextTemplateService.Data.Provider.MsSql.Ef.Migrations
       Guid GreetingTemplate = Guid.NewGuid();
       Guid MailConfirmationTemplate = Guid.NewGuid();
       Guid UserRecoveryTemplate = Guid.NewGuid();
+      Guid SmtpCheckTemplate = Guid.NewGuid();
 
       const string ru = "ru";
       const string en = "en";
@@ -39,7 +40,8 @@ namespace LT.DigitalOffice.TextTemplateService.Data.Provider.MsSql.Ef.Migrations
           { PasswordRecoveryTemplate, (int)TemplateType.PasswordRecovery, true},
           { GreetingTemplate, (int)TemplateType.Greeting, true},
           { MailConfirmationTemplate, (int)TemplateType.ConfirmСommunication, true},
-          { UserRecoveryTemplate, (int)TemplateType.UserRecovery, true}
+          { UserRecoveryTemplate, (int)TemplateType.UserRecovery, true},
+          { SmtpCheckTemplate, (int)TemplateType.SmtpCheck, true}
         });
 
       migrationBuilder.InsertData(
@@ -155,6 +157,30 @@ namespace LT.DigitalOffice.TextTemplateService.Data.Provider.MsSql.Ef.Migrations
             "Здравствуйте, {[FirstName]} {[LastName]}!\n"
             + "Это письмо для восстановления вашей учетной записи. Если вы не оставляли заявку, проигнорируйте это сообщение.\n"
             + "Перейдите по этой ссылке: https://dev.ltdo.xyz/auth/reactivate?userId={[Id]}\nПароль: {[Password]}",
+            ru,
+            true
+          },
+          {
+            Guid.NewGuid(),
+            SmtpCheckTemplate,
+            "SMTP settings check",
+            "SMTP settings check",
+            "Hello!\n"
+            + "This email address was specified as the administrator's email address to receive the SMTP check's message.\n"
+            + "If you haven't submitted a request, please ignore this message.\n"
+            + "Receiving this message means that the SMTP check was successful.",
+            en,
+            true
+          },
+          {
+            Guid.NewGuid(),
+            SmtpCheckTemplate,
+            "Проверка настроек SMTP",
+            "Проверка настроек SMTP",
+            "Здравствуйте!\n"
+            + "Ваша электронная почта была указана как электронная почта администратора для проверки настроек SMTP.\n"
+            + "Если Вы не отправляли запрос, пожалуйста, проигнорируйте это сообщение.\n"
+            + "Получение Вами этого письма означает, что проверка настроек SMTP пройдена успешно.",
             ru,
             true
           }

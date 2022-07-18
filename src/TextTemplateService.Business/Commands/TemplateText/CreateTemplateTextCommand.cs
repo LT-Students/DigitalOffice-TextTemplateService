@@ -4,7 +4,6 @@ using System.Net;
 using System.Threading.Tasks;
 using LT.DigitalOffice.Kernel.BrokerSupport.AccessValidatorEngine.Interfaces;
 using LT.DigitalOffice.Kernel.Constants;
-using LT.DigitalOffice.Kernel.Enums;
 using LT.DigitalOffice.Kernel.FluentValidationExtensions;
 using LT.DigitalOffice.Kernel.Helpers.Interfaces;
 using LT.DigitalOffice.Kernel.Responses;
@@ -44,7 +43,7 @@ namespace LT.DigitalOffice.TextTemplateService.Business.Commands.TemplateText
 
     public async Task<OperationResultResponse<Guid?>> ExecuteAsync(TemplateTextRequest request)
     {
-      if (!await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailTemplates))
+      if (!await _accessValidator.HasRightsAsync(Rights.AddEditRemoveEmailsTemplates))
       {
         return _responseCreator.CreateFailureResponse<Guid?>(HttpStatusCode.Forbidden);
       }
@@ -59,7 +58,6 @@ namespace LT.DigitalOffice.TextTemplateService.Business.Commands.TemplateText
       OperationResultResponse<Guid?> response = new();
 
       response.Body = await _repository.CreateAsync(_mapper.Map(request));
-      response.Status = OperationResultStatusType.FullSuccess;
 
       _httpContextAccessor.HttpContext.Response.StatusCode = (int)HttpStatusCode.Created;
 
